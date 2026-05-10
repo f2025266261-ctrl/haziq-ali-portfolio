@@ -14,7 +14,7 @@ export default function DigitalTwin() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      role: "assistant",
+      role: "assistant" as const,
       content:
         "Hi! I am Haziq's AI Twin. Tell me about your project and I'll help you get started.",
     },
@@ -33,7 +33,10 @@ export default function DigitalTwin() {
       return;
     }
 
-    const nextMessages = [...messages, { role: "user", content: trimmed }];
+    const nextMessages = [
+      ...messages,
+      { role: "user" as const, content: trimmed },
+    ];
     setMessages(nextMessages);
     setInput("");
     setIsLoading(true);
@@ -58,14 +61,14 @@ export default function DigitalTwin() {
       if (data.reply) {
         setMessages((current) => [
           ...current,
-          { role: "assistant", content: data.reply ?? "" },
+          { role: "assistant" as const, content: data.reply ?? "" },
         ]);
       }
     } catch {
       setMessages((current) => [
         ...current,
         {
-          role: "assistant",
+          role: "assistant" as const,
           content:
             "Sorry, I could not connect right now. Please reach out on WhatsApp for a fast response.",
         },
